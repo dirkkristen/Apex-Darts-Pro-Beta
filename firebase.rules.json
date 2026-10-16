@@ -1,0 +1,29 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "betaRooms": {
+      "$code": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((!data.exists() && newData.child('hostUid').val() === auth.uid && newData.child('status').val() === 'waiting') || (data.exists() && data.child('hostUid').val() === auth.uid))",
+        "guest": {
+          ".write": "auth != null && !data.exists() && newData.child('uid').val() === auth.uid && auth.uid !== data.parent().child('hostUid').val() && data.parent().child('status').val() === 'waiting'",
+          ".validate": "newData.hasChildren(['uid', 'name', 'localId']) && newData.child('uid').isString() && newData.child('name').isString() && newData.child('name').val().length <= 32 && newData.child('localId').isString()"
+        },
+        "state": {
+          ".write": "auth != null && data.parent().child('status').val() === 'active' && auth.uid === data.parent().child('guest').child('uid').val() && newData.child('lastByUid').val() === auth.uid",
+          ".validate": "newData.hasChildren(['match', 'revision', 'lastByUid']) && newData.child('revision').isNumber()"
+        },
+        "rematchGuest": {
+          ".write": "auth != null && auth.uid === data.parent().child('guest').child('uid').val() && newData.val() === true"
+        },
+        "presence": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid && (auth.uid === data.parent().parent().child('hostUid').val() || auth.uid === data.parent().parent().child('guest').child('uid').val())",
+            ".validate": "newData.isBoolean()"
+          }
+        }
+      }
+    }
+  }
+}

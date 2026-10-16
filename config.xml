@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="com.apex.dartspro.beta" version="1.7.0" android-versionCode="17000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Apex Darts Pro Beta</name>
+    <description>Premium darts scorer with smart checkout coaching, arcade and online multiplayer.</description>
+    <author email="no-reply@example.invalid">Apex Darts Pro</author>
+    <content src="index.html" />
+    <access origin="https://*.googleapis.com" />
+    <access origin="https://*.gstatic.com" />
+    <access origin="https://*.firebaseapp.com" />
+    <access origin="https://*.firebaseio.com" />
+    <access origin="https://*.firebasedatabase.app" />
+    <allow-intent href="https://*/*" />
+    <preference name="android-minSdkVersion" value="26" />
+    <preference name="android-targetSdkVersion" value="36" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#0b1018" />
+    <preference name="SplashScreenDelay" value="0" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <icon src="icon.png" />
+</widget>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0b1018">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://*.googleapis.com https://*.gstatic.com https://*.firebaseio.com https://*.firebasedatabase.app https://*.firebaseapp.com wss://*.firebaseio.com wss://*.firebasedatabase.app; frame-src 'self' https://*.firebaseapp.com; object-src 'none'; base-uri 'self'">
+<meta name="color-scheme" content="dark">
+<title>Apex Darts Pro</title>
+<link rel="stylesheet" href="css/styles.css">
+<script src="cordova.js"></script>
+</head>
+<body>
+<div id="splash" class="splash" role="button" tabindex="0" aria-label="Start Apex Darts Pro">
+  <div class="splash-vignette"></div>
+  <div class="splash-target"><div class="splash-rings"></div><div class="splash-dart"></div><div class="splash-bull"></div></div>
+  <div class="splash-wordmark"><div>APEX</div><small>D A R T S &nbsp; P R O</small></div>
+  <p class="splash-caption">READY. AIM. APEX.</p>
+</div>
+<div class="app-shell" id="app-shell">
+  <header class="app-header" id="app-header">
+    <button class="brand" data-action="home" aria-label="Home"><span class="brand-gem">◈</span><span><strong>APEX</strong><small>DARTS PRO</small></span></button>
+    <div class="header-actions"><button class="header-icon" data-action="show-players" aria-label="Manage players"><span>♙</span></button><button class="header-icon" data-action="settings" aria-label="Settings"><span>⚙</span></button></div>
+  </header>
+  <main>
+    <section class="screen active" id="home-screen" aria-label="Home">
+      <div class="section-top"><span class="eyebrow">WELCOME TO THE OCHE</span><span class="version-text">v1.70 BETA</span></div>
+      <div class="hero">
+        <div class="hero-grid"></div>
+        <span class="hero-kicker">YOUR NEXT MATCH STARTS HERE</span>
+        <h1>READY.<br><em>AIM.</em> APEX.</h1>
+        <p>Championship scoring. Arcade challenges. Your darts, your rules.</p>
+        <button class="primary-btn hero-play" data-action="quick-play">▶ &nbsp; QUICK PLAY <span>›</span></button>
+      </div>
+      <div class="section-header"><h2>Choose your arena</h2><span class="subtle">One tap to play</span></div>
+      <div class="home-tiles">
+        <button class="home-tile" data-action="choose-mode" data-mode="x01"><span class="tile-icon cyan">◎</span><strong>CLASSIC MATCH</strong><small>101 / 301 / 501 / 701</small><span class="tile-arrow">↗</span></button>
+        <button class="home-tile" data-action="online-menu"><span class="tile-icon purple">⌁</span><strong>ONLINE DUEL</strong><small>Play across two devices</small><span class="tile-arrow">↗</span></button>
+        <button class="home-tile" data-action="show-modes"><span class="tile-icon gold">✦</span><strong>GAME ARCADE</strong><small>14 different game modes</small><span class="tile-arrow">↗</span></button>
+        <button class="home-tile" data-action="show-stats"><span class="tile-icon green">▥</span><strong>PLAYER STATS</strong><small>Accuracy, records &amp; wins</small><span class="tile-arrow">↗</span></button>
+      </div>
+      <div class="home-player-summary"><span class="eyebrow">PLAYING TODAY</span><div id="home-player-badges"></div><button class="text-action" data-action="show-players">EDIT PLAYERS →</button></div>
+      <p class="footer-text">BUILT FOR THE LOVE OF DARTS</p>
+    </section>
+
+    <section class="screen" id="modes-screen" aria-label="Game modes">
+      <div class="page-title"><button class="back-btn" data-action="home">‹</button><div><span class="eyebrow">PICK YOUR CHALLENGE</span><h1>Game modes</h1></div></div>
+      <div class="filter-row" id="mode-filters"><button class="filter active" data-category="all">All</button><button class="filter" data-category="classic">Classic</button><button class="filter" data-category="arcade">Arcade</button><button class="filter" data-category="training">Training</button></div>
+      <div id="mode-grid" class="mode-grid"></div>
+    </section>
+
+    <section class="screen" id="setup-screen" aria-label="Match setup">
+      <div class="page-title"><button class="back-btn" data-action="show-modes">‹</button><div><span class="eyebrow">PREPARE THE MATCH</span><h1 id="setup-title">Match setup</h1></div></div>
+      <div class="setup-summary"><div class="summary-glyph">◎</div><div><strong id="setup-name">X01</strong><p id="setup-description">Count down to zero</p></div></div>
+      <div class="panel"><div class="panel-heading"><h2>Game rules</h2><span class="panel-chip">CUSTOMISE</span></div><div id="setup-options" class="setup-options"></div></div>
+      <div class="panel"><div class="panel-heading"><h2>Players</h2><button class="text-action" data-action="show-players">MANAGE →</button></div><div id="setup-player-list" class="setup-player-list"></div></div>
+      <div class="setup-bottom"><button class="primary-btn" data-action="start-local">START MATCH <span>→</span></button><button class="outline-btn" data-action="host-game">HOST ONLINE MATCH</button></div>
+    </section>
+
+    <section class="screen" id="players-screen" aria-label="Player management">
+      <div class="page-title"><button class="back-btn" data-action="home">‹</button><div><span class="eyebrow">YOUR SQUAD</span><h1>Players</h1></div></div>
+      <div class="panel"><label class="input-label" for="new-player">NEW PLAYER NAME</label><div class="field-row"><input id="new-player" maxlength="24" placeholder="Name or nickname" autocomplete="off"><button class="primary-btn small-btn" data-action="add-player">ADD</button></div><p class="hint">Player names and statistics stay on this device.</p></div>
+      <div id="player-cards"></div>
+      <button class="outline-btn full" data-action="home">DONE</button>
+    </section>
+
+    <section class="screen game-screen" id="game-screen" aria-label="Live match">
+      <div class="game-topline"><button class="quiet-icon" data-action="exit-match">‹ EXIT</button><div id="game-mode-badge">501 · DOUBLE OUT</div><div><button class="quiet-icon" data-action="show-standings">STANDINGS</button><button class="quiet-icon" data-action="open-log">LOG ≡</button></div></div>
+      <div class="score-ribbon" id="score-ribbon"></div>
+      <div class="active-player-bar"><div><span class="eyebrow">NOW THROWING</span><strong id="current-player-name">Player 1</strong></div><div id="turn-status" class="turn-status">THROW 1 OF 3</div></div>
+      <div class="target-advice" id="target-advice"><span class="advice-label">TARGET</span><strong id="target-text">Get ready</strong><small id="advice-alternatives"></small></div>
+      <div class="match-mid">
+        <div class="board-area"><div class="board-frame" id="board-frame"><svg id="dartboard" viewBox="-250 -250 500 500" aria-label="Interactive darts board" role="group"></svg></div><div class="quick-board-links"><button data-action="bull" data-mult="1">OUTER BULL <span>25</span></button><button data-action="bull" data-mult="2">BULLSEYE <span>50</span></button></div></div>
+        <div class="game-actions">
+          <div class="mode-selector" id="input-mode-selector"><button data-input="board" class="selected">BOARD</button><button data-input="pad">NUMBER PAD</button></div>
+          <div class="multiplier-row"><button data-multiplier="1" class="active">SINGLE</button><button data-multiplier="2">2× DOUBLE</button><button data-multiplier="3">3× TRIPLE</button></div>
+          <div id="number-pad" class="number-pad" hidden></div><div id="circuit-quick" class="circuit-quick" hidden><button data-circuit-hits="2">2 ON TARGET</button><button data-circuit-hits="1">1 ON TARGET</button><button data-circuit-hits="0">ALL MISSED</button></div>
+          <div class="scoring-actions"><button data-action="miss-one" class="miss-btn">✕ &nbsp; MISS</button><button data-action="miss-rest" class="skip-btn">MISS REST</button><button data-action="undo" class="undo-btn">↶ &nbsp; UNDO</button></div>
+          <div class="timer-row"><span id="shot-timer">00:00</span><span id="darts-counter">● ● ●</span><button data-action="toggle-timer" id="timer-btn">PAUSE</button></div>
+        </div>
+      </div>
+      <div id="game-feedback" class="game-feedback" aria-live="polite">TAP A SEGMENT TO SCORE</div>
+    </section>
+
+    <section class="screen" id="stats-screen" aria-label="Statistics">
+      <div class="page-title"><button class="back-btn" data-action="home">‹</button><div><span class="eyebrow">THE NUMBERS DON'T LIE</span><h1>Player statistics</h1></div></div>
+      <div id="statistics-list" class="stats-list"></div><button class="outline-btn full" data-action="backup">BACKUP / RESTORE PLAYER DATA</button>
+    </section>
+
+    <section class="screen" id="winner-screen" aria-label="Match results">
+      <div class="winner-halo">✦</div><p class="eyebrow centered">APEX DARTS PRO</p><h1 class="winner-title">GAME SHOT!</h1><h2 id="winner-name">PLAYER 1</h2><p id="winner-details" class="winner-details">Match complete</p>
+      <div class="winner-stats" id="winner-stat-grid"></div>
+      <button class="primary-btn full" data-action="rematch">↻ &nbsp; REMATCH</button><button class="outline-btn full" data-action="home">BACK TO HOME</button>
+    </section>
+  </main>
+  <nav class="tabbar" id="tabbar" aria-label="Main navigation"><button data-action="home" class="selected"><span>⌂</span>HOME</button><button data-action="show-modes"><span>◎</span>GAMES</button><button data-action="show-players"><span>♙</span>PLAYERS</button><button data-action="show-stats"><span>▥</span>STATS</button></nav>
+</div>
+<div id="overlay" class="overlay" hidden><div class="modal" id="modal" role="dialog" aria-modal="true"><button class="modal-close" data-action="close-modal" aria-label="Close">×</button><div id="modal-body"></div></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="js/checkout.js"></script><script src="js/engine.js"></script><script src="js/voice.js"></script><script src="js/online.js"></script><script src="js/app.js"></script>
+</body></html>

@@ -1,0 +1,69 @@
+name: Build Apex Darts Pro APK
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.2'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+      - name: Install Android 16 SDK and build tools
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'platform-tools'
+      - name: Run automated game tests
+        run: node --test tests/*.test.js
+      - name: Install pinned Cordova CLI
+        run: npm install -g cordova@13.0.0
+      - name: Generate Android project
+        run: |
+          cordova create app com.apex.dartspro.beta "Apex Darts Pro Beta"
+          cp config.xml app/config.xml
+          cp icon.png app/icon.png
+          cp -R www/. app/www/
+      - name: Include offline Firebase SDK
+        run: |
+          mkdir -p app/www/vendor
+          for part in app auth database; do
+            curl --fail --location --silent --show-error --retry 3 \
+              "https://www.gstatic.com/firebasejs/10.12.2/firebase-${part}-compat.js" \
+              -o "app/www/vendor/firebase-${part}-compat.js"
+          done
+          test -s app/www/vendor/firebase-database-compat.js
+      - name: Add Android platform and Cordova plugins
+        working-directory: app
+        run: |
+          cordova platform add android@15.0.0
+          cordova plugin add cordova-plugin-tts-advanced@0.5.3
+          cordova plugin add cordova-plugin-insomnia@4.1.0
+      - name: Build APK
+        working-directory: app
+        run: cordova build android --debug
+      - name: Name APK
+        run: cp app/platforms/android/app/build/outputs/apk/debug/app-debug.apk Apex-Darts-Pro-v1.70-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Apex-Darts-Pro-v1.70-Android
+          path: Apex-Darts-Pro-v1.70-debug.apk
+          if-no-files-found: error
+          retention-days: 30

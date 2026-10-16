@@ -1,0 +1,44 @@
+APEX DARTS PRO v1.70 BETA — START HERE
+=======================================
+
+GOOD NEWS: You do NOT need PowerShell, Node.js, Android Studio, or Java on
+YOUR computer. GitHub's servers will build the Android APK for you.
+
+IMPORTANT: This BETA is a separate Android app (com.apex.dartspro.beta).
+It installs NEXT TO your old Apex Darts Pro, so your v1.63 app/data stay safe.
+
+1. Download and extract this ZIP to a normal folder on your PC.
+2. Install GitHub Desktop: https://desktop.github.com/
+3. Sign into your GitHub account in GitHub Desktop.
+4. In GitHub Desktop click File > Add Local Repository > Choose.
+   Select the EXTRACTED folder that contains this START-HERE.txt file.
+   If it says "not a Git repository", choose "Create a Repository Here".
+5. Make sure all the files appear under Changes. Enter a summary such as
+   "Apex v1.70 beta" and click Commit to main.
+6. Click Publish repository. You may keep it PRIVATE.
+7. Open the GitHub website and go to your new repository > Actions.
+   Open "Build Apex Darts Pro APK". If necessary, click Run workflow.
+8. Wait for a GREEN tick. Open the successful run and download the
+   "Apex-Darts-Pro-v1.70-Android" artifact.
+9. Extract the downloaded artifact ZIP and send the included APK to your
+   Samsung phone. Open the APK and approve "Install unknown apps" if prompted.
+10. Launch Apex Darts Pro Beta and play a LOCAL match first.
+
+Multiplayer requires separate Firebase setup. Do not paste firebase.rules.json
+into your EXISTING Firebase project: that would overwrite its rules.
+For details on safe online setup and troubleshooting, see README.md.
+
+IF THE BUILD FAILS: open the RED GitHub Actions run, click the failing step,
+and paste its error message into ChatGPT. We can fix the exact issue.
+
+FILES:
+- www/                 The actual app and all of its code
+- .github/workflows/    GitHub's automatic Android APK build instructions
+- config.xml           Android identity, version, permissions
+- icon.png             Android launcher icon
+- tests/               Automated scoring tests
+- firebase.rules.json  Rules TEMPLATE for a NEW, dedicated Firebase project
+
+STATUS: The JavaScript scoring tests and browser UI checks have been run.
+An actual Android APK has NOT been built or installed in this environment.
+The Android build runs after you upload/publish this source to GitHub.

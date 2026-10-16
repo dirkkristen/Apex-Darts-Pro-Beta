@@ -1,0 +1,8 @@
+node_modules/
+app/
+platforms/
+plugins/
+*.apk
+.DS_Store
+www/vendor/firebase-*-compat.js
+preview-*.png
