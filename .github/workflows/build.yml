@@ -59,7 +59,11 @@ jobs:
         working-directory: app
         run: cordova build android --debug
       - name: Name APK
-        run: cp app/platforms/android/app/build/outputs/apk/debug/app-debug.apk Apex-Darts-Pro-v1.70-debug.apk
+        run: |
+          apk=$(find . -type f -path '*/outputs/apk/debug/*.apk' -print -quit)
+          test -n "$apk" || { echo 'No debug APK found'; exit 1; }
+          echo "Found APK: $apk"
+          cp "$apk" Apex-Darts-Pro-v1.70-debug.apk
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
